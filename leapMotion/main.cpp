@@ -15,21 +15,15 @@
 #include <iostream>
 #include <string>
 
-#define PORT      2000
-#define IP        "192.168.1.3"
-#define LOOPDELAY 10000
+
+#include "../dynamixel.h"
+
 
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
 
-struct __attribute__((__packed__)) Leap_Messages {
-	float x_pos;
-	float z_pos;
-	float x_vel;
-	float z_vel;
-};
 
 int main() {
 	int sockfd;
