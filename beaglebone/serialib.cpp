@@ -104,7 +104,7 @@ int serialib::ReadStringNoTimeOut(char *String,char FinalChar,unsigned int MaxNb
     unsigned int    NbBytes=0;                                          // Number of bytes read
     char            ret;                                                // Returned value from Read
     
-    while (NbBytes<MaxNbBytes) {}                                         // While the buffer is not full                                                                  // Read a byte with the restant time
+    while (NbBytes<MaxNbBytes) {                                         // While the buffer is not full                                                                  // Read a byte with the restant time
         ret=ReadChar(&String[NbBytes]);
         
         if (ret==1) {                                                    // If a byte has been read
@@ -119,11 +119,12 @@ int serialib::ReadStringNoTimeOut(char *String,char FinalChar,unsigned int MaxNb
         if (ret<0)
             return ret;                                          // Error while reading : return the error number
     }
+
     return -3;                                                          // Buffer is full : return -3
 }
 
-int serialib::ReadString(char *String,char FinalChar,unsigned int MaxNbBytes,unsigned int TimeOut_ms)
-{
+int serialib::ReadString(char *String,char FinalChar,unsigned int MaxNbBytes,unsigned int TimeOut_ms) {
+    
     if (TimeOut_ms==0)
         return ReadStringNoTimeOut(String,FinalChar,MaxNbBytes);
 
@@ -133,51 +134,40 @@ int serialib::ReadString(char *String,char FinalChar,unsigned int MaxNbBytes,uns
     long int        TimeOutParam;
     Timer.InitTimer();                                                  // Initialize the timer
 
-    while (NbBytes<MaxNbBytes)                                          // While the buffer is not full
-    {                                                                   // Read a byte with the restant time
+    while (NbBytes<MaxNbBytes) {                                         // While the buffer is not full
+                                                                        // Read a byte with the restant time
         TimeOutParam=TimeOut_ms-Timer.ElapsedTime_ms();                 // Compute the TimeOut for the call of ReadChar
-        if (TimeOutParam>0)                                             // If the parameter is higher than zero
-        {
+        if (TimeOutParam>0) {                                             // If the parameter is higher than zero
             ret=ReadChar(&String[NbBytes],TimeOutParam);                // Wait for a byte on the serial link            
-            if (ret==1)                                                 // If a byte has been read
-            {
 
-                if (String[NbBytes]==FinalChar)                         // Check if it is the final char
-                {
+            if (ret==1) {                                                // If a byte has been read
+
+                if (String[NbBytes]==FinalChar) {                        // Check if it is the final char
                     String  [++NbBytes]=0;                              // Yes : add the end character 0
                     return NbBytes;                                     // Return the number of bytes read
                 }
                 NbBytes++;                                              // If not, just increase the number of bytes read
             }
+            
             if (ret<0) return ret;                                      // Error while reading : return the error number
         }
+        
         if (Timer.ElapsedTime_ms()>TimeOut_ms) {                        // Timeout is reached
             String[NbBytes]=0;                                          // Add the end caracter
             return 0;                                                   // Return 0
         }
     }
+
     return -3;                                                          // Buffer is full : return -3
 }
 
 
-int serialib::Read (void *Buffer,unsigned int MaxNbBytes,unsigned int TimeOut_ms)
-{
-#if defined (_WIN32) || defined(_WIN64)
-    DWORD dwBytesRead = 0;
-    timeouts.ReadTotalTimeoutConstant=(DWORD)TimeOut_ms;                // Set the TimeOut
-    if(!SetCommTimeouts(hSerial, &timeouts))                            // Write the parameters
-        return -1;                                                      // Error while writting the parameters
-    if(!ReadFile(hSerial,Buffer,(DWORD)MaxNbBytes,&dwBytesRead, NULL))  // Read the bytes from the serial device
-        return -2;                                                      // Error while reading the byte
-    if (dwBytesRead!=(DWORD)MaxNbBytes) return 0;                       // Return 0 if the timeout is reached
-    return 1;                                                           // Success
-#endif
-#ifdef __linux__
+int serialib::Read (void *Buffer,unsigned int MaxNbBytes,unsigned int TimeOut_ms) {
     TimeOut          Timer;                                             // Timer used for timeout
     Timer.InitTimer();                                                  // Initialise the timer
     unsigned int     NbByteRead=0;
-    while (Timer.ElapsedTime_ms()<TimeOut_ms || TimeOut_ms==0)          // While Timeout is not reached
-    {
+
+    while (Timer.ElapsedTime_ms()<TimeOut_ms || TimeOut_ms==0) {         // While Timeout is not reached
         unsigned char* Ptr=(unsigned char*)Buffer+NbByteRead;           // Compute the position of the current byte
         int Ret=read(fd,(void*)Ptr,MaxNbBytes-NbByteRead);              // Try to read a byte on the device
         if (Ret==-1) return -2;                                         // Error while reading
@@ -188,53 +178,32 @@ int serialib::Read (void *Buffer,unsigned int MaxNbBytes,unsigned int TimeOut_ms
         }
     }
     return 0;                                                           // Timeout reached, return 0
-#endif
 }
-
-
-
-
 // _________________________
 // ::: Special operation :::
-
-
-
-void serialib::FlushReceiver()
-{
-#ifdef __linux__
+void serialib::FlushReceiver() {
     tcflush(fd,TCIFLUSH);
-#endif
 }
 
-
-
-int serialib::Peek()
-{
+int serialib::Peek() {
     int Nbytes=0;
-#ifdef __linux__
     ioctl(fd, FIONREAD, &Nbytes);
-#endif
     return Nbytes;
 }
 
 // ******************************************
 //  Class TimeOut
 // ******************************************
-
-
 // Constructor
-TimeOut::TimeOut()
-{}
+TimeOut::TimeOut() {}
 
 //Initialize the timer
-void TimeOut::InitTimer()
-{
+void TimeOut::InitTimer() {
     gettimeofday(&PreviousTime, NULL);
 }
 
 //Return the elapsed time since initialization
-unsigned long int TimeOut::ElapsedTime_ms()
-{
+unsigned long int TimeOut::ElapsedTime_ms() {
     struct timeval CurrentTime;
     int sec,usec;
     gettimeofday(&CurrentTime, NULL);                                   // Get current time
