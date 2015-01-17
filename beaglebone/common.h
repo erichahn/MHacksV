@@ -4,9 +4,6 @@
 // beaglebone listener port
 #define PORT      2000
 
-// beaglebone name
-#define IP        "192.168.1.3"
-
 // delay between leap motion data broadcast
 #define LOOPDELAY 10000
 

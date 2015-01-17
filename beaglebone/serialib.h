@@ -29,19 +29,19 @@ public:
     // Write a char
     char WriteChar(char);
     // Read a char (with timeout)
-    char ReadChar(char *pByte,const unsigned int TimeOut_ms=NULL);
+    char ReadChar(char *pByte,const unsigned int TimeOut_ms=0);
     //________________________________________
     // ::: Read/Write operation on strings :::
     // Write a string
     char WriteString(const char *String);
     // Read a string (with timeout)
-    int ReadString(char *String, char FinalChar, unsigned int MaxNbBytes, const unsigned int TimeOut_ms = NULL);
+    int ReadString(char *String, char FinalChar, unsigned int MaxNbBytes, const unsigned int TimeOut_ms = 0);
     // _____________________________________
     // ::: Read/Write operation on bytes :::
     // Write an array of bytes
     char Write(const void *Buffer, const unsigned int NbBytes);
     // Read an array of byte (with timeout)
-    int Read(void *Buffer,unsigned int MaxNbBytes,const unsigned int TimeOut_ms=NULL);
+    int Read(void *Buffer,unsigned int MaxNbBytes,const unsigned int TimeOut_ms=0);
     // _________________________
     // ::: Special operation :::
     // Empty the received buffer

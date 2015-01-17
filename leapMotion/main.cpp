@@ -16,7 +16,8 @@
 #include <string>
 
 
-#include "../dynamixel.h"
+#include "../beaglebone/dynamixel.h"
+#include "../beaglebone/common.h"
 
 
 using std::cout;
@@ -25,10 +26,16 @@ using std::endl;
 using std::string;
 
 
-int main() {
+int main(int argc, char* argv[]) {
 	int sockfd;
 	struct sockaddr_in serv_addr, cli_addr;
 	struct hostent *hp;
+
+    if (argc != 2)
+    {
+        printf("usage: %s <ip dest addr>\n",argv[0]);
+        exit(1);
+    }
 
 	if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
 		cout << "Can't open socket" << endl;
@@ -39,13 +46,13 @@ int main() {
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(PORT);
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
-
+/*
 	if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
 		cout << "Can't bind socket" << endl;
 		exit(1);
 	}
-
-	string ip = IP;
+*/
+	string ip = argv[1];
 	memset((char *)&cli_addr, 0, sizeof(cli_addr));
 	cli_addr.sin_family = AF_INET;
 	cli_addr.sin_port = htons(PORT);
@@ -56,9 +63,9 @@ int main() {
 	while (true) {
 		struct Leap_Messages mess;
 		mess.x_pos = count++;
-		mess.z_pos = count++;
+		mess.y_pos = count++;
 		mess.x_vel = count++;
-		mess.z_vel = count++;
+		mess.y_vel = count++;
 		int code = sendto(sockfd, (char *)&mess, 16, 0, (struct sockaddr *)&cli_addr, sizeof(cli_addr));
 		string error = strerror(errno);
 		cout << error << " " << code << endl;
