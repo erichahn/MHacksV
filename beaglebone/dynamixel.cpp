@@ -8,14 +8,14 @@ Dynamixel::~Dynamixel() {
 
 }
 
-bool Dynamixel::set_position(int position) {
-
+bool Dynamixel::set_position(float position) {
+    int pos = (int)(position * 1024.0); 
     return false;
 }
 
-int Dynamixel::get_position() {
+float Dynamixel::get_position() {
 
-    return 0;
+    return 0/1024.0;
 }
 
 bool Dynamixel::set_angle(float angle) {

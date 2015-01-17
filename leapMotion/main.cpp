@@ -52,6 +52,9 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 */
+    struct Leap_Messages mess;
+    memset(&mess, 0, sizeof(mess));
+
 	string ip = argv[1];
 	memset((char *)&cli_addr, 0, sizeof(cli_addr));
 	cli_addr.sin_family = AF_INET;
@@ -61,11 +64,10 @@ int main(int argc, char* argv[]) {
 	float count = 0;
 
 	while (true) {
-		struct Leap_Messages mess;
-		mess.x_pos = count++;
-		mess.y_pos = count++;
-		mess.x_vel = count++;
-		mess.y_vel = count++;
+		mess.x_pos += .1f;
+		mess.y_pos += .1f;
+        mess.x_vel += .1f;
+		mess.y_vel += .1f;
 		int code = sendto(sockfd, (char *)&mess, 16, 0, (struct sockaddr *)&cli_addr, sizeof(cli_addr));
 		string error = strerror(errno);
 		cout << error << " " << code << endl;
