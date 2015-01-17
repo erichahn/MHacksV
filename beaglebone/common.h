@@ -20,8 +20,6 @@
 #define max_y_pos 1.0f
 
 
-
-
 // leap motion data
 struct __attribute__((__packed__)) Leap_Messages {
 	float x_pos;

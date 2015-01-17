@@ -3,7 +3,7 @@ CC=clang++
 CFLAGS=-Wall
 LFLAGS=
 
-OBJ=dynamixel.o main.o
+OBJ=dynamixel.o main.o dylib.o dxl_hal.cpp
 
 TARGET=dynamixel
 

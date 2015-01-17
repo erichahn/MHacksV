@@ -8,6 +8,7 @@
 #include <strings.h>
 
 #include "dynamixel.h"
+#include "dylib.h"
 #include "common.h"
 
 void movePlayer(Dynamixel& dynx, Dynamixel& dyny, int sockfd)
@@ -41,13 +42,13 @@ int main(int argc, char**argv)
     struct sockaddr_in servaddr, cliaddr;
     char sendline[1000];
     struct Leap_Messages recvLeap;
-/*
     if (argc != 2)
     {
-        printf("usage: %s <IP dest address>\n", argv[0]);
+        printf("usage: %s <USB index>\n", argv[0]);
         exit(1);
     }
-*/
+    dxl_initialize( atoi(argv[1]), 9600) ;
+
     if( (player1 = socket(AF_INET,SOCK_DGRAM,0)) < 0)
     {
         perror("socket");
@@ -79,8 +80,8 @@ int main(int argc, char**argv)
         exit(1);
     }
  
-    Dynamixel x1(1), y1(2);
-    Dynamixel x2(3), y2(4);
+    Dynamixel x1(3), y1(3);
+    Dynamixel x2(3), y2(3);
 
     fd_set fdset;
     struct timeval tv;

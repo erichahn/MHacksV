@@ -4,7 +4,7 @@
 
 class Dynamixel{
     public:
-    Dynamixel(int id, int baud=115200);
+    Dynamixel(int id, int baud=9600);
     ~Dynamixel();
 	bool set_position(float position);
 	float get_position();
