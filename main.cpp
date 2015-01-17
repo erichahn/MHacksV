@@ -1,15 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/select.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <arpa/inet.h>
 #include <unistd.h>
+#include <netdb.h>
+#include <errno.h>
 #include <iostream>
 #include <string>
 
-#define PORT 2000
+#define PORT      2000
+#define IP        "192.168.1.3"
+#define LOOPDELAY 10000
 
 using std::cout;
 using std::cerr;
@@ -24,18 +32,13 @@ struct __attribute__((__packed__)) Leap_Messages {
 };
 
 int main() {
-	int sockfd, newsockfd, maxfd;
-	char buffer[256];
+	int sockfd;
 	struct sockaddr_in serv_addr, cli_addr;
-	fd_set read_fds, temp_fds;
-	struct timeval tv;
-	
-	FD_ZERO(&read_fds);
-	FD_ZERO(&temp_fds);
+	struct hostent *hp;
 
 	if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
 		cout << "Can't open socket" << endl;
-		exit 1;
+		exit(1);
 	}
 	
 	bzero((char *) &serv_addr, sizeof(serv_addr));
@@ -45,38 +48,27 @@ int main() {
 
 	if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
 		cout << "Can't bind socket" << endl;
-		exit 1;
+		exit(1);
 	}
 
-	FD_SET(socketfd, &read_fds);
-	tv.tv_sec = 1;
-	tv.tv_usec = 0;
-	maxfd = sockfd;
-	listen(sockfd, 5);
+	string ip = IP;
+	memset((char *)&cli_addr, 0, sizeof(cli_addr));
+	cli_addr.sin_family = AF_INET;
+	cli_addr.sin_port = htons(PORT);
+	hp = gethostbyname(ip.c_str());
+	memcpy((void *)&cli_addr.sin_addr, hp->h_addr_list[0], hp->h_length);
+	float count = 0;
 
 	while (true) {
-		temp_fds = read_fds;
-		
-		if (select(maxfd + 1, &temp_fds, NULL, NULL, &tv) < 0)
-		
-		if ((newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &sizeof(cli_addr))) < 0) {
-			cout << "Error on accept" << endl;
-		}
-	
-		bzero(buffer, 256);
-		n = read(newsockfd, buffer, 255);
-		
-		if (n < 0) {
-			error("ERROR reading from socket");
-		}
-	
-		printf("Here is the message: %s",buffer);
-	
-		n = write(newsockfd, "I got your message", 18);
-		
-		if (n < 0) {
-			error("ERROR writing to socket");
-		}
+		struct Leap_Messages mess;
+		mess.x_pos = count++;
+		mess.z_pos = count++;
+		mess.x_vel = count++;
+		mess.z_vel = count++;
+		int code = sendto(sockfd, (char *)&mess, 16, 0, (struct sockaddr *)&cli_addr, sizeof(cli_addr));
+		string error = strerror(errno);
+		cout << error << " " << code << endl;
+		usleep(10000);
 	}
 
 	return 0;
