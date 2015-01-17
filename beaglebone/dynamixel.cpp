@@ -4,7 +4,7 @@
 #include "dylib.h"
 
 Dynamixel::Dynamixel(int id, int baud) : id(id), baud(baud), uart() {
-    uart.Open("/dev/ttyUSB0", baud);
+    uart.Open("/dev/ttyO0", baud);
 }
 
 Dynamixel::~Dynamixel() {
