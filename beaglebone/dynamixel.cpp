@@ -3,7 +3,7 @@
 #include "dynamixel.h"
 #include "dylib.h"
 
-Dynamixel::Dynamixel(int id, int baud) : id(id), baud(baud) {
+Dynamixel::Dynamixel(int id, int baud) : id(4), baud(baud) {
     
 }
 
@@ -15,7 +15,10 @@ bool Dynamixel::set_position(float position) {
     int pos = (int)(position * 1024.0); 
     pos %= 1024;
 
-    dxl_write_word(id, 0x1e, pos);
+    dxl_write_word(id, 30, pos);
+    // dxl_write_byte(id, 0x1e, pos & 0xff);
+    //dxl_write_byte(id, 0x1f, (pos & 0xff00) >> 8);
+ 
     printf("goto pos %d dynamixel %d\n ",pos,id);
 
     return false;

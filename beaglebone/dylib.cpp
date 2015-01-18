@@ -1,6 +1,9 @@
 #include "dxl_hal.h"
 #include "dylib.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define ID					(2)
 #define LENGTH				(3)
 #define INSTRUCTION			(4)
@@ -19,7 +22,7 @@ int giBusUsing = 0;
 int dxl_initialize(int deviceIndex, int baudnum )
 {
 	float baudrate = (float)baudnum;	
-	//baudrate = 2000000.0f / (float)(baudnum + 1);
+	baudrate = 2000000.0f / (float)(baudnum + 1);
     //
 
 	if( dxl_hal_open(deviceIndex, baudrate) == 0 )
@@ -49,6 +52,8 @@ void dxl_tx_packet(void)
 	if( gbInstructionPacket[LENGTH] > (MAXNUM_TXPARAM+2) )
 	{
 		gbCommStatus = COMM_TXERROR;
+	        printf("Error\n");
+        exit(1);
 		giBusUsing = 0;
 		return;
 	}
@@ -61,6 +66,8 @@ void dxl_tx_packet(void)
 		&& gbInstructionPacket[INSTRUCTION] != INST_RESET
 		&& gbInstructionPacket[INSTRUCTION] != INST_SYNC_WRITE )
 	{
+        printf("Error\n");
+        exit(1);
 		gbCommStatus = COMM_TXERROR;
 		giBusUsing = 0;
 		return;
@@ -70,7 +77,8 @@ void dxl_tx_packet(void)
 	gbInstructionPacket[1] = 0xff;
 	for( i=0; i<(gbInstructionPacket[LENGTH]+1); i++ )
 		checksum += gbInstructionPacket[i+2];
-	gbInstructionPacket[gbInstructionPacket[LENGTH]+3] = ~checksum;
+	gbInstructionPacket[gbInstructionPacket[LENGTH]+3] = (~checksum) ;
+    //printf("checksum: %x\n", (~checksum) & 0xff);
 	
 	if( gbCommStatus == COMM_RXTIMEOUT || gbCommStatus == COMM_RXCORRUPT )
 		dxl_hal_clear();
@@ -340,4 +348,9 @@ void dxl_write_word( int id, int address, int value )
 
 	
 	dxl_txrx_packet();
+    for (int i = 0 ; i < 6 + LENGTH; i ++)
+    {
+        printf("%x:", gbInstructionPacket[i]);
+    }
+    printf("\n");
 }

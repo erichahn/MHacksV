@@ -5,8 +5,8 @@
 // beaglebone listener port
 #define PORT      2000
 
-// delay between leap motion data broadcast
-#define LOOPDELAY 10000
+// delay between leap motion data broadcast us
+#define LOOPDELAY 10000000
 
 // software limits for servos so they dont break
 #define x_plus_limit 100
