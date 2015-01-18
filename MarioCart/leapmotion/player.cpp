@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "player.h"
 #include "windows.h"
 
@@ -15,28 +15,50 @@ m_A(a), m_B(b), m_X(l), m_Y(r), m_Z(z), m_Start(s)
 Player::~Player(){
 }
 
-void Player::up(int dur){
-	if (dur)tapKey(m_upKey, dur);
+void Player::up(int dur, int flags){
+	if (dur)tapKey('w', dur, flags);
 }
-void Player::down(int dur){
-	if (dur)tapKey(m_downKey, dur);
+void Player::down(int dur, int flags){
+	if (dur)tapKey('s', dur, flags);
 }
-void Player::left(int dur){
-	if (dur)tapKey(m_leftKey, dur);
+void Player::left(int dur, int flags){
+	if (dur)tapKey('a', dur, flags);
 }
-void Player::right(int dur){
-	if (dur)tapKey(m_rightKey, dur);
+void Player::right(int dur, int flags){
+	if (dur)tapKey('d', dur, flags);
 }
 
+void Player::upOff(int dur, int flags){
+	tapKey('w', 0, 0);
+}
+void Player::downOff(int dur, int flags){
+	tapKey('s', 0,0);
+}
+void Player::leftOff(int dur, int flags){
+	tapKey('a', 0,0);
+}
+void Player::rightOff(int dur, int flags){
+	tapKey('d', 0, 0);
+}
 
 void Player::button(MarioCart::Button but, int delay){
 	switch (but)
 	{
-		AButton: tapKey(m_A, delay); break;
-		BButton: tapKey(m_B, delay); break;
-		XButton: tapKey(m_X, delay); break;
-		YButton: tapKey(m_Y, delay); break;
-		ZButton: tapKey(m_Z, delay); break;
+		case AButton:
+			tapKey(m_A, delay);
+			break;
+		case BButton:
+			tapKey(m_B, delay);
+			break;
+		case XButton:
+			tapKey(m_X, delay);
+			break;
+		case YButton:
+			tapKey(m_Y, delay);
+			break;
+		case ZButton:
+			tapKey(m_Z, delay);
+			break;
 	}
 	
 }

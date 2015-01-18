@@ -15,11 +15,16 @@ public:
 
 	// move somewhere
 	// duration means the miliseconds the arrow key will be held down
-	virtual void up(int dur=25);
-	virtual void down(int dur=25);
-	virtual void left(int dur=25);
-	virtual void right(int dur=25);
+	virtual void up(int dur=25, int flags=0);
+	virtual void down(int dur=25,int flags=0);
+	virtual void left(int dur=25, int flags=0);
+	virtual void right(int dur=25, int flags=0);
 
+
+	void upOff(int dur=0, int flags=1);
+	void downOff(int dur=0, int flags=1);
+	void leftOff(int dur=0, int flags=1);
+	void rightOff(int dur=0, int flags=1);
 
 	virtual void button(Button but, int delay=10);
 	virtual void back(int delay=0);

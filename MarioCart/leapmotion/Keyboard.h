@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #pragma once
 
 class Keyboard{
@@ -6,8 +6,8 @@ public:
 	Keyboard();
 	~Keyboard();
 
-	virtual void tapKey(char key, int delay=0);
-	virtual void tapKey(const char* key, int delay=0);
+	virtual void tapKey(char key, int delay=0, int flags=0);
+	virtual void tapKey(const char* key, int delay=0, int flags=0);
 
 	virtual void up(int dur=50);
 	virtual void down(int dur=50);
