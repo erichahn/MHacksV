@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 		int code = sendto(sockfd, (char *)&mess, 16, 0, (struct sockaddr *)&cli_addr, sizeof(cli_addr));
 		string error = strerror(errno);
 		cout << error << " " << code << endl;
-		usleep(10000);
+		usleep(1000000);
 	}
 
 	return 0;
