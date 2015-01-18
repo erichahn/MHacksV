@@ -1,0 +1,29 @@
+﻿Build started 1/18/2015 7:47:30 AM.
+     1>Project "C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Super Mario Kart\Super Mario Kart.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\Keyboard.cpp ..\..\player.cpp
+         player.cpp
+         Keyboard.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Debug\Super Mario Kart.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\lib\x86 Leapd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Debug\Super Mario Kart.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Debug\Super Mario Kart.lib" /MACHINE:X86 Debug\Keyboard.obj
+         Debug\player.obj
+         Debug\main.obj
+         Debug\SampleListener.obj
+         Super Mario Kart.vcxproj -> C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Debug\Super Mario Kart.exe
+       PostBuildEvent:
+         xcopy /yr "C:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\lib\x86\Leapd.dll" "C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Debug\"
+         xcopy /yr "C:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\lib\x86\msvcp120d.dll" "C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Debug\"
+         xcopy /yr "C:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\lib\x86\msvcr120d.dll" "C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Debug\"
+         :VCEnd
+         C:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\lib\x86\Leapd.dll
+         1 File(s) copied
+         C:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\lib\x86\msvcp120d.dll
+         1 File(s) copied
+         C:\Users\Yatch\Desktop\Leap_Motion_SDK_Windows_2.2.2\LeapDeveloperKit_2.2.2+24469_win\LeapSDK\lib\x86\msvcr120d.dll
+         1 File(s) copied
+     1>Done Building Project "C:\Users\Yatch\Desktop\MHacksV\MarioCart\leapmotion\Super Mario Kart\Super Mario Kart\Super Mario Kart.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.32

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 //#include "stdafx.h"
+=======
+>>>>>>> 7da31b8514175da386324fc65e4a8a922b79edd6
 #pragma once
 
 class Keyboard{
