@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "player.h"
 #include "windows.h"
 

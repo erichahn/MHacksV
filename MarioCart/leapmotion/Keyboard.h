@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #pragma once
 
 class Keyboard{
